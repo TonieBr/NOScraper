@@ -1,6 +1,6 @@
 # NOScraper
 
-# Scraping NOS Liveblogs (WIP)
+# NOS Liveblogs (WIP)
 
 Sinds enkele jaren kent ook de 'liveblog' in Nederland zijn opkomst bij spraakmakende of belangrijke situaties. Langlopende situaties als de Arabische Lente, de COVID-19 pandemie en de Russische invasie van Oekraïne zijn voorbeeld van langlopende liveblogs. 
 
