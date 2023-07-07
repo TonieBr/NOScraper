@@ -18,13 +18,20 @@ cur.execute('CREATE TABLE IF NOT EXISTS Covid(id INTEGER NOT NULL PRIMARY KEY AU
 cur.execute('CREATE TABLE IF NOT EXISTS CovidMsg(url_id INTEGER, title TEXT, time TIME, message TEXT)')
 
 links = list()
-article = 2417536
+
+# Continue or Begin Reading
+cur.execute('SELECT MIN(url) FROM Covid')
+tmp = cur.fetchone()[0]
+
+if tmp is None:
+    article = 2417536
+else:
+    arr = tmp.split('/')
+    article = int(arr[len(arr) - 1])
 
 baseURL = os.path.join('http://nos.nl/liveblog/', str(article))
 handle = urllib.request.urlopen(baseURL).read()
 soup = BeautifulSoup(handle, 'html.parser')
-
-#while article > 2418365:
 
 requests_session = requests.Session()
 r = requests_session.get('http://nos.nl/')

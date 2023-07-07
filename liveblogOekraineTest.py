@@ -18,13 +18,20 @@ cur.execute('CREATE TABLE IF NOT EXISTS Oekraine(id INTEGER NOT NULL PRIMARY KEY
 cur.execute('CREATE TABLE IF NOT EXISTS OekraineMsg(url_id INTEGER, title TEXT, time TIME, message TEXT)')
 
 links = list()
-article = 2481670
+
+# Continue or Begin Reading
+cur.execute('SELECT MIN(url) FROM Oekraine')
+tmp = cur.fetchone()[0]
+
+if tmp is None:
+    article = 2481670
+else:
+    arr = tmp.split('/')
+    article = int(arr[len(arr) - 1])
 
 baseURL = os.path.join('http://nos.nl/liveblog/', str(article))
 handle = urllib.request.urlopen(baseURL).read()
 soup = BeautifulSoup(handle, 'html.parser')
-
-#while article > 2418365:
 
 requests_session = requests.Session()
 r = requests_session.get('http://nos.nl/')
