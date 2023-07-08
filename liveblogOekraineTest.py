@@ -11,7 +11,7 @@ import requests
 
 cwd = sys.path[0]
 
-conn = sqlite3.connect(os.path.join(cwd, 'liveblogDB.sqlite'))
+conn = sqlite3.connect(os.path.join(cwd, 'liveblogDBOekraine.sqlite'))
 cur = conn.cursor()
 
 cur.execute('CREATE TABLE IF NOT EXISTS Oekraine(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, datum DATE, url TEXT)')
@@ -36,6 +36,7 @@ soup = BeautifulSoup(handle, 'html.parser')
 requests_session = requests.Session()
 r = requests_session.get('http://nos.nl/')
 
+# While True Loop with manual Date (i.e. 20 Feb 2022) instead of art number 
 while article > 2418365:
      baseURL = os.path.join('http://nos.nl/liveblog/', str(article))
      print('Reading:', baseURL)
@@ -61,6 +62,7 @@ while article > 2418365:
             Liveblog = True
 
          if Oekraine and Liveblog and Datum:
+            print('Found')
             cur.execute('INSERT INTO Oekraine(datum, url) VALUES(?, ?)', (date, baseURL))
             cur.execute('SELECT id FROM Oekraine WHERE url=?', (baseURL,))
             Ukr_id = cur.fetchone()[0]
